@@ -17,6 +17,8 @@ const initCLI = () => {
   if (args.token) {
     // TODO: Сохранить токен
   }
+
+  // TODO: Вывести погоду
 };
 
 initCLI();
