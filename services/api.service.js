@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getKeyValue, TokenDictionary } from './storage.service.js';
 
 const getWeather = async (city) => {
-  const token = await getKeyValue(TokenDictionary.Token);
+  const token = process.env.TOKEN ?? (await getKeyValue(TokenDictionary.Token));
 
   if (!token) {
     throw new Error('Не задан ключ API, задайте его через команду -t [API_KEY]');
@@ -13,7 +13,7 @@ const getWeather = async (city) => {
       q: city,
       appid: token,
       lang: 'ru',
-      units: 'metrics',
+      units: 'metric',
     },
   });
 
