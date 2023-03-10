@@ -3,11 +3,16 @@ import chalk from 'chalk';
 import dedent from 'dedent-js';
 import { getArgs } from './helpers/args.js';
 import { printError, printHelp, printSuccess } from './services/log.service.js';
-import { saveKeyValue } from './services/storage.service.js';
+import { saveKeyValue, TokenDictionary } from './services/storage.service.js';
 
 const saveToken = async (token) => {
+  if (!token.length) {
+    printError('Токен не передан');
+    return;
+  }
+
   try {
-    await saveKeyValue('token', token);
+    await saveKeyValue(TokenDictionary.Token, token);
     printSuccess('Токен сохранен');
   } catch (error) {
     printError(error.message);
