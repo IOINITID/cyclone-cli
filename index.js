@@ -1,20 +1,21 @@
 #!/usr/bin/env node
-import { getArgs } from "./helpers/args.js";
+import { getArgs } from './helpers/args.js';
+import { printHelp } from './services/log.service.js';
 
 const initCLI = () => {
   const args = getArgs(process.argv);
 
-  console.log("LOG: CLI args:", args);
+  console.log('LOG: CLI args:', args);
 
-  if (args.help) {
-    // TODO: Вывести help в консоль
+  if (args.h) {
+    printHelp();
   }
 
-  if (args.city) {
+  if (args.c) {
     // TODO: Сохранить город
   }
 
-  if (args.token) {
+  if (args.t) {
     // TODO: Сохранить токен
   }
 
