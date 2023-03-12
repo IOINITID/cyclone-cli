@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import dedent from 'dedent';
+import { promises } from 'fs';
 
 const printError = (error) => {
   console.log(chalk.bgRed(' Error ') + ' ' + error);
@@ -17,6 +18,7 @@ const printHelp = () => {
     -c [CITY] для установки города
     -h для вывода помощи
     -t [API_KEY] для сохранения токена
+    -v для вывода версии приложения
     `
   );
 };
@@ -33,4 +35,11 @@ const printWeather = (weather, icon) => {
   );
 };
 
-export { printError, printSuccess, printHelp, printWeather };
+const printVersion = async () => {
+  const appPackage = JSON.parse(await promises.readFile('./package.json'));
+  const version = appPackage.version;
+
+  console.log(chalk.bgWhite(' VERSION ') + ' ' + version);
+};
+
+export { printError, printSuccess, printHelp, printWeather, printVersion };

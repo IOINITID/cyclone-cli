@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import dedent from 'dedent';
 import { getArgs } from './helpers/args.js';
 import { getWeather, getWeatherIcon } from './services/api.service.js';
-import { printError, printHelp, printSuccess, printWeather } from './services/log.service.js';
+import { printError, printHelp, printSuccess, printVersion, printWeather } from './services/log.service.js';
 import { saveKeyValue, TokenDictionary } from './services/storage.service.js';
 
 const saveToken = async (token) => {
@@ -86,6 +86,10 @@ const initCLI = () => {
 
   if (args.t) {
     return saveToken(args.t);
+  }
+
+  if (args.v) {
+    return printVersion();
   }
 
   return getWeatherForecast();
