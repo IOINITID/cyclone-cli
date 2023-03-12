@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { AxiosError } from 'axios';
 import chalk from 'chalk';
-import dedent from 'dedent-js';
+import dedent from 'dedent';
 import { getArgs } from './helpers/args.js';
 import { getWeather, getWeatherIcon } from './services/api.service.js';
 import { printError, printHelp, printSuccess, printWeather } from './services/log.service.js';

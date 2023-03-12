@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import dedent from 'dedent-js';
+import dedent from 'dedent';
 
 const printError = (error) => {
   console.log(chalk.bgRed(' Error ') + ' ' + error);
