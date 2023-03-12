@@ -1,7 +1,7 @@
 {
   "name": "cyclone-cli",
   "version": "1.0.0",
-  "description": "Weather forecast cli application.",
+  "description": "Cyclone - CLI for getting weather forecast.",
   "main": "index.js",
   "type": "module",
   "bin": {
@@ -20,8 +20,8 @@
     "forecast",
     "cli"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Igor Orishchenko <ioinitid@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/IOINITID/cyclone-cli/issues"
   },
