@@ -19,7 +19,6 @@
     "weather",
     "forecast",
     "cli",
-    "yargs",
     "open-weather-map"
   ],
   "author": "Igor Orishchenko <ioinitid@gmail.com>",
