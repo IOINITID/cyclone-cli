@@ -2,10 +2,11 @@
 import { AxiosError } from 'axios';
 import chalk from 'chalk';
 import dedent from 'dedent';
-import { getArgs } from './helpers/args.js';
 import { getWeather, getWeatherIcon } from './services/api.service.js';
 import { printError, printHelp, printSuccess, printVersion, printWeather } from './services/log.service.js';
 import { saveKeyValue, TokenDictionary } from './services/storage.service.js';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
 
 const saveToken = async (token) => {
   if (!token.length) {
@@ -67,28 +68,29 @@ const getWeatherForecast = async () => {
 };
 
 const initCLI = () => {
-  const args = getArgs(process.argv);
+  const args = yargs(hideBin(process.argv)).help(false).version(false).argv;
 
-  if (process.env.MODE === 'development')
+  if (process.env.MODE === 'development') {
     console.log(
       dedent`${chalk.bgWhite(' LOG ')} Переданные аргументы:
   `,
       args
     );
+  }
 
-  if (args.h) {
+  if (args.h || args.help) {
     return printHelp();
   }
 
-  if (args.c) {
+  if (args.c || args.city) {
     return saveCity(args.c);
   }
 
-  if (args.t) {
+  if (args.t || args.token) {
     return saveToken(args.t);
   }
 
-  if (args.v) {
+  if (args.v || args.version) {
     return printVersion();
   }
 
