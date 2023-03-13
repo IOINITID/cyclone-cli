@@ -83,11 +83,19 @@ const initCLI = () => {
   }
 
   if (args.c || args.city) {
-    return saveCity(args.c);
+    if (args.c) {
+      return saveCity(String(args.c));
+    }
+
+    return saveCity(String(args.city));
   }
 
   if (args.t || args.token) {
-    return saveToken(args.t);
+    if (args.t) {
+      return saveToken(String(args.t));
+    }
+
+    return saveToken(String(args.token));
   }
 
   if (args.v || args.version) {
