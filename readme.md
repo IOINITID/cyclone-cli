@@ -1,3 +1,3 @@
-# Cyclone CLI
+# Cyclone
 
-## CLI application for getting weather forecast with.
+## CLI for getting weather forecast.
