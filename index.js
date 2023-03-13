@@ -72,7 +72,7 @@ const initCLI = () => {
 
   if (process.env.MODE === 'development') {
     console.log(
-      dedent`${chalk.bgWhite(' LOG ')} Переданные аргументы:
+      dedent`${chalk.bgWhite(' Log ')} Переданные аргументы:
   `,
       args
     );
