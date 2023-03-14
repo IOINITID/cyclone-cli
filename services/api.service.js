@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { getKeyValue, TokenDictionary } from './storage.service.js';
+import inquirer from 'inquirer';
+import { saveCity, saveToken } from '../index.js';
 
 const getWeatherIcon = (icon) => {
   switch (icon.slice(0, -1)) {
@@ -27,15 +29,41 @@ const getWeatherIcon = (icon) => {
 };
 
 const getWeather = async () => {
-  const city = process.env.CITY ?? (await getKeyValue(TokenDictionary.City));
-  const token = process.env.TOKEN ?? (await getKeyValue(TokenDictionary.Token));
-
-  if (!city) {
-    throw new Error('Город не задан, задайте его через команду -c [CITY]');
-  }
+  let token = process.env.TOKEN ?? (await getKeyValue(TokenDictionary.Token));
+  let city = process.env.CITY ?? (await getKeyValue(TokenDictionary.City));
 
   if (!token) {
-    throw new Error('Не задан ключ API, задайте его через команду -t [API_KEY]');
+    const prompt = inquirer.createPromptModule();
+
+    const inputToken = await prompt({
+      type: 'input',
+      name: 'token',
+      message: 'Добавьте ключ API полученный с сервиса https://openweathermap.org:',
+    });
+
+    if (inputToken.token) {
+      await saveToken(inputToken.token);
+      token = await getKeyValue(TokenDictionary.Token);
+    } else {
+      throw new Error('Не добавлен ключ API, повторите запрос или добавьте его через команду -t, --token [API_KEY]');
+    }
+  }
+
+  if (!city) {
+    const prompt = inquirer.createPromptModule();
+
+    const inputCity = await prompt({
+      type: 'input',
+      name: 'city',
+      message: 'Добавьте город:',
+    });
+
+    if (inputCity.city) {
+      await saveCity(inputCity.city);
+      city = await getKeyValue(TokenDictionary.City);
+    } else {
+      throw new Error('Город не добавлен, повторите запрос или добавьте его через команду -c, --city [CITY]');
+    }
   }
 
   const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather', {

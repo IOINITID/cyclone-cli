@@ -8,7 +8,7 @@ import { saveKeyValue, TokenDictionary } from './services/storage.service.js';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 
-const saveToken = async (token) => {
+export const saveToken = async (token) => {
   if (!token.length) {
     printError('Токен не передан');
     return;
@@ -22,7 +22,7 @@ const saveToken = async (token) => {
   }
 };
 
-const saveCity = async (city) => {
+export const saveCity = async (city) => {
   if (!city.length) {
     printError('Город не передан');
     return;
@@ -55,9 +55,9 @@ const getWeatherForecast = async () => {
   } catch (error) {
     if (error instanceof AxiosError) {
       if (error.response.status === 404) {
-        printError('Неверно указан город');
+        printError('Неверно указан город, обновите его через команду -c, --city [CITY]');
       } else if (error.response.status === 401) {
-        printError('Неверно указан токен');
+        printError('Неверно указан токен, обновите его через команду -t, --token [API_KEY]');
       }
     }
 
