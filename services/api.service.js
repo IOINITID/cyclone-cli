@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getKeyValue, TokenDictionary } from './storage.service.js';
 import inquirer from 'inquirer';
 import { saveCity, saveToken } from '../index.js';
+import { createSpinner } from 'nanospinner';
 
 const getWeatherIcon = (icon) => {
   switch (icon.slice(0, -1)) {
@@ -66,6 +67,8 @@ const getWeather = async () => {
     }
   }
 
+  const spinner = createSpinner('Загрузка...').start();
+
   const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
     params: {
       q: city,
@@ -74,6 +77,8 @@ const getWeather = async () => {
       units: 'metric',
     },
   });
+
+  spinner.success();
 
   return data;
 };
