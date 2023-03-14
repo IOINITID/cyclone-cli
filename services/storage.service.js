@@ -2,7 +2,8 @@ import { homedir } from 'os';
 import { join } from 'path';
 import { promises } from 'fs';
 
-const filePath = join(homedir(), 'cyclone-data.json');
+const folderPath = join(homedir(), '.cyclone');
+const filePath = join(homedir(), '.cyclone/config.json');
 
 const TokenDictionary = {
   Token: 'token',
@@ -15,6 +16,10 @@ const saveKeyValue = async (key, value) => {
   if (await isExist(filePath)) {
     const file = await promises.readFile(filePath);
     data = JSON.parse(file);
+  }
+
+  if (!(await isExist(folderPath))) {
+    await promises.mkdir(folderPath);
   }
 
   data[key] = value;
