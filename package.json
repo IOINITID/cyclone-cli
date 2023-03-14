@@ -32,6 +32,7 @@
     "chalk": "^5.2.0",
     "dedent": "^0.7.0",
     "inquirer": "^9.1.4",
+    "nanospinner": "^1.1.0",
     "yargs": "^17.7.1"
   }
 }
