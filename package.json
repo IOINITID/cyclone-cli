@@ -4,6 +4,7 @@
   "description": "Cyclone - CLI for getting weather forecast.",
   "main": "./dist/index.js",
   "type": "module",
+  "types": "./dist/index.d.ts",
   "bin": {
     "cyclone": "./dist/index.js"
   },
