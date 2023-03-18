@@ -8,19 +8,24 @@ import { hideBin } from 'yargs/helpers';
 import { createSpinner } from 'nanospinner';
 import inquirer from 'inquirer';
 
+// TODO: Добавить в cyclone controller
 export const saveToken = async (token: string) => {
-  if (!token.length) {
-    printService.error('Токен не передан');
+  const spinner = createSpinner();
+
+  if (token === 'true') {
+    spinner.error({ text: 'Токен не передан...' });
+
     return;
   }
 
   try {
+    spinner.start({ text: 'Сохранение токена...' });
+
     await storageService.set(Storage.Token, token);
-    printService.success('Токен сохранен');
+
+    spinner.success({ text: 'Токен сохранен...' });
   } catch (error) {
-    if (error instanceof Error) {
-      printService.error(error.message);
-    }
+    spinner.error({ text: 'Ошибка сохранения токена...' });
   }
 };
 
