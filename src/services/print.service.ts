@@ -41,6 +41,10 @@ class PrintService {
 
     console.log(chalk.bgYellow(' Weather ') + ' ' + message);
   }
+
+  public log(...optionalParams: any[]): void {
+    console.log(chalk.bgWhite(' Log '), ...optionalParams);
+  }
 }
 
 export const printService = new PrintService();

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import { AxiosError } from 'axios';
-import chalk from 'chalk';
-import dedent from 'dedent';
 import { apiService } from './services/api.service';
 import { printService } from './services/print.service';
 import { Storage, storageService } from './services/storage.service';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
+import { createSpinner } from 'nanospinner';
+import inquirer from 'inquirer';
 
 export const saveToken = async (token: string) => {
   if (!token.length) {
@@ -24,61 +24,103 @@ export const saveToken = async (token: string) => {
   }
 };
 
+// TODO: Добавить в cyclone controller
 export const saveCity = async (city: string) => {
-  if (!city.length) {
-    printService.error('Город не передан');
+  const spinner = createSpinner();
+
+  if (city === 'true') {
+    spinner.error({ text: 'Город не передан...' });
+
     return;
   }
 
   try {
+    spinner.start({ text: 'Сохранение города...' });
+
     await storageService.set(Storage.City, city);
-    await apiService.getWeather();
 
-    printService.success('Город сохранен');
+    spinner.success({ text: 'Город сохранен...' });
   } catch (error) {
-    if (error instanceof AxiosError) {
-      if (error.response?.status === 404) {
-        printService.error('Ошибка сохранения, неверно указан город');
-      } else if (error.response?.status === 401) {
-        printService.error('Ошибка сохранения, неверно указан токен');
-      }
-    }
-
-    if (error instanceof Error) {
-      printService.error(error.message);
-    }
+    spinner.error({ text: 'Ошибка сохранения города...' });
   }
 };
 
+// TODO: Добавить в cyclone controller
 const getWeatherForecast = async () => {
+  const spinner = createSpinner();
+
   try {
-    const weather = await apiService.getWeather();
+    let token = await storageService.get(Storage.Token);
+    let city = await storageService.get(Storage.City);
+
+    // TODO: Вынести проверуки в отдельный метод
+    if (!token) {
+      const prompt = inquirer.createPromptModule();
+
+      const inputToken = await prompt({
+        type: 'input',
+        name: 'token',
+        message: 'Добавьте ключ API полученный с сервиса https://openweathermap.org:',
+      });
+
+      if (inputToken.token) {
+        await saveToken(inputToken.token);
+        token = await storageService.get(Storage.Token);
+      } else {
+        spinner.error({
+          text: 'Не добавлен ключ API, повторите запрос или добавьте его через команду -t, --token [API_KEY]',
+        });
+        return;
+      }
+    }
+
+    // TODO: Вынести проверуки в отдельный метод
+    if (!city) {
+      const prompt = inquirer.createPromptModule();
+
+      const inputCity = await prompt({
+        type: 'input',
+        name: 'city',
+        message: 'Добавьте город:',
+      });
+
+      if (inputCity.city) {
+        await saveCity(inputCity.city);
+        city = await storageService.get(Storage.City);
+      } else {
+        spinner.error({
+          text: 'Город не добавлен, повторите запрос или добавьте его через команду -c, --city [CITY]',
+        });
+        return;
+      }
+    }
+
+    spinner.start({ text: 'Загрузка...' });
+
+    const weather = await apiService.getWeather(token, city);
+
+    spinner.success({ text: 'Загружено...' });
 
     printService.weather(weather, apiService.getWeatherIcon(weather.weather[0].icon) as string);
   } catch (error) {
     if (error instanceof AxiosError) {
       if (error.response?.status === 404) {
-        printService.error('Неверно указан город, обновите его через команду -c, --city [CITY]');
+        spinner.error({ text: 'Неверно указан город, обновите его через команду -c, --city [CITY]' });
       } else if (error.response?.status === 401) {
-        printService.error('Неверно указан токен, обновите его через команду -t, --token [API_KEY]');
+        spinner.error({ text: 'Неверно указан токен, обновите его через команду -t, --token [API_KEY]' });
       }
+      return;
     }
 
-    if (error instanceof Error) {
-      printService.error(error.message);
-    }
+    spinner.error({ text: 'Ошибка загрузки...' });
   }
 };
 
-const initCLI = async () => {
+const main = async () => {
   const args = await yargs(hideBin(process.argv)).help(false).version(false).argv;
 
   if (process.env.MODE === 'development') {
-    console.log(
-      dedent`${chalk.bgWhite(' Log ')} Переданные аргументы:
-  `,
-      args
-    );
+    printService.log('Переданные аргументы: ', args);
   }
 
   if (args.h || args.help) {
@@ -108,4 +150,4 @@ const initCLI = async () => {
   return getWeatherForecast();
 };
 
-initCLI();
+main();
