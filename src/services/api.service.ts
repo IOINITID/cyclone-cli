@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { getKeyValue, TokenDictionary } from './storage.service.js';
+import { getKeyValue, TokenDictionary } from './storage.service';
 import inquirer from 'inquirer';
-import { saveCity, saveToken } from '../index.js';
+import { saveCity, saveToken } from '../index';
 import { createSpinner } from 'nanospinner';
 
-const getWeatherIcon = (icon) => {
+const getWeatherIcon = (icon: string) => {
   switch (icon.slice(0, -1)) {
     case '01':
       return '☀️';

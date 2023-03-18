@@ -1,6 +1,6 @@
-import { homedir } from 'os';
-import { join } from 'path';
-import { promises } from 'fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
+import { promises } from 'node:fs';
 
 const folderPath = join(homedir(), '.cyclone');
 const filePath = join(homedir(), '.cyclone/config.json');
@@ -10,12 +10,12 @@ const TokenDictionary = {
   City: 'city',
 };
 
-const saveKeyValue = async (key, value) => {
-  let data = {};
+const saveKeyValue = async (key: string, value: string) => {
+  let data: Record<string, any> = {};
 
   if (await isExist(filePath)) {
     const file = await promises.readFile(filePath);
-    data = JSON.parse(file);
+    data = JSON.parse(String(file));
   }
 
   if (!(await isExist(folderPath))) {
@@ -26,10 +26,10 @@ const saveKeyValue = async (key, value) => {
   await promises.writeFile(filePath, JSON.stringify(data));
 };
 
-const getKeyValue = async (key) => {
+const getKeyValue = async (key: string) => {
   if (await isExist(filePath)) {
     const file = await promises.readFile(filePath);
-    const data = JSON.parse(file);
+    const data = JSON.parse(String(file));
     const value = data[key];
     return value;
   }
@@ -37,7 +37,7 @@ const getKeyValue = async (key) => {
   return undefined;
 };
 
-const isExist = async (path) => {
+const isExist = async (path: string) => {
   try {
     await promises.stat(path);
     return true;

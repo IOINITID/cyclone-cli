@@ -2,13 +2,13 @@
 import { AxiosError } from 'axios';
 import chalk from 'chalk';
 import dedent from 'dedent';
-import { getWeather, getWeatherIcon } from './services/api.service.js';
-import { printError, printHelp, printSuccess, printVersion, printWeather } from './services/log.service.js';
-import { saveKeyValue, TokenDictionary } from './services/storage.service.js';
+import { getWeather, getWeatherIcon } from './services/api.service';
+import { printError, printHelp, printSuccess, printVersion, printWeather } from './services/log.service';
+import { saveKeyValue, TokenDictionary } from './services/storage.service';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 
-export const saveToken = async (token) => {
+export const saveToken = async (token: string) => {
   if (!token.length) {
     printError('Токен не передан');
     return;
@@ -18,11 +18,13 @@ export const saveToken = async (token) => {
     await saveKeyValue(TokenDictionary.Token, token);
     printSuccess('Токен сохранен');
   } catch (error) {
-    printError(error.message);
+    if (error instanceof Error) {
+      printError(error.message);
+    }
   }
 };
 
-export const saveCity = async (city) => {
+export const saveCity = async (city: string) => {
   if (!city.length) {
     printError('Город не передан');
     return;
@@ -35,9 +37,9 @@ export const saveCity = async (city) => {
     printSuccess('Город сохранен');
   } catch (error) {
     if (error instanceof AxiosError) {
-      if (error.response.status === 404) {
+      if (error.response?.status === 404) {
         printError('Ошибка сохранения, неверно указан город');
-      } else if (error.response.status === 401) {
+      } else if (error.response?.status === 401) {
         printError('Ошибка сохранения, неверно указан токен');
       }
     }
@@ -51,12 +53,13 @@ export const saveCity = async (city) => {
 const getWeatherForecast = async () => {
   try {
     const weather = await getWeather();
-    printWeather(weather, getWeatherIcon(weather.weather[0].icon));
+
+    printWeather(weather, getWeatherIcon(weather.weather[0].icon) as string);
   } catch (error) {
     if (error instanceof AxiosError) {
-      if (error.response.status === 404) {
+      if (error.response?.status === 404) {
         printError('Неверно указан город, обновите его через команду -c, --city [CITY]');
-      } else if (error.response.status === 401) {
+      } else if (error.response?.status === 401) {
         printError('Неверно указан токен, обновите его через команду -t, --token [API_KEY]');
       }
     }
@@ -67,8 +70,8 @@ const getWeatherForecast = async () => {
   }
 };
 
-const initCLI = () => {
-  const args = yargs(hideBin(process.argv)).help(false).version(false).argv;
+const initCLI = async () => {
+  const args = await yargs(hideBin(process.argv)).help(false).version(false).argv;
 
   if (process.env.MODE === 'development') {
     console.log(

@@ -1,12 +1,12 @@
 import chalk from 'chalk';
 import dedent from 'dedent';
-import { promises } from 'fs';
+import { promises } from 'node:fs';
 
-const printError = (error) => {
+const printError = (error: string) => {
   console.log(chalk.bgRed(' Error ') + ' ' + error);
 };
 
-const printSuccess = (message) => {
+const printSuccess = (message: string) => {
   console.log(chalk.bgGreen(' Success ') + ' ' + message);
 };
 
@@ -23,7 +23,7 @@ const printHelp = () => {
   );
 };
 
-const printWeather = (weather, icon) => {
+const printWeather = (weather: Record<string, any>, icon: string) => {
   console.log(
     dedent`
     ${chalk.bgYellow(' Weather ')} Погода в городе: ${weather.name}
@@ -36,7 +36,7 @@ const printWeather = (weather, icon) => {
 };
 
 const printVersion = async () => {
-  const appPackage = JSON.parse(await promises.readFile('./package.json'));
+  const appPackage = JSON.parse(String(await promises.readFile('./package.json')));
   const version = appPackage.version;
 
   console.log(chalk.bgWhite(' Version ') + ' ' + version);
