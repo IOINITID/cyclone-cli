@@ -12,7 +12,12 @@ class StorageService {
   public filePath = join(homedir(), '.cyclone/config.json');
 
   public async set(key: string, value: string) {
-    let data: Record<string, any> = {};
+    const appPackage = JSON.parse(String(await promises.readFile('./package.json')));
+    const version = appPackage.version;
+
+    let data: Record<string, any> = {
+      [version]: {},
+    };
 
     if (await this.isExist(this.filePath)) {
       const file = await promises.readFile(this.filePath);
@@ -23,15 +28,18 @@ class StorageService {
       await promises.mkdir(this.folderPath);
     }
 
-    data[key] = value;
+    data[version][key] = value;
     await promises.writeFile(this.filePath, JSON.stringify(data));
   }
 
   public async get(key: string) {
+    const appPackage = JSON.parse(String(await promises.readFile('./package.json')));
+    const version = appPackage.version;
+
     if (await this.isExist(this.filePath)) {
       const file = await promises.readFile(this.filePath);
       const data = JSON.parse(String(file));
-      const value = data[key];
+      const value = data[version][key];
 
       return value;
     }
