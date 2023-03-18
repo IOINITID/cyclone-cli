@@ -2,48 +2,51 @@ import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { promises } from 'node:fs';
 
-const folderPath = join(homedir(), '.cyclone');
-const filePath = join(homedir(), '.cyclone/config.json');
+export enum Storage {
+  Token = 'token',
+  City = 'city',
+}
 
-const TokenDictionary = {
-  Token: 'token',
-  City: 'city',
-};
+class StorageService {
+  public folderPath = join(homedir(), '.cyclone');
+  public filePath = join(homedir(), '.cyclone/config.json');
 
-const saveKeyValue = async (key: string, value: string) => {
-  let data: Record<string, any> = {};
+  public async set(key: string, value: string) {
+    let data: Record<string, any> = {};
 
-  if (await isExist(filePath)) {
-    const file = await promises.readFile(filePath);
-    data = JSON.parse(String(file));
+    if (await this.isExist(this.filePath)) {
+      const file = await promises.readFile(this.filePath);
+      data = JSON.parse(String(file));
+    }
+
+    if (!(await this.isExist(this.folderPath))) {
+      await promises.mkdir(this.folderPath);
+    }
+
+    data[key] = value;
+    await promises.writeFile(this.filePath, JSON.stringify(data));
   }
 
-  if (!(await isExist(folderPath))) {
-    await promises.mkdir(folderPath);
+  public async get(key: string) {
+    if (await this.isExist(this.filePath)) {
+      const file = await promises.readFile(this.filePath);
+      const data = JSON.parse(String(file));
+      const value = data[key];
+
+      return value;
+    }
+
+    return undefined;
   }
 
-  data[key] = value;
-  await promises.writeFile(filePath, JSON.stringify(data));
-};
-
-const getKeyValue = async (key: string) => {
-  if (await isExist(filePath)) {
-    const file = await promises.readFile(filePath);
-    const data = JSON.parse(String(file));
-    const value = data[key];
-    return value;
+  private async isExist(path: string) {
+    try {
+      await promises.stat(path);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
+}
 
-  return undefined;
-};
-
-const isExist = async (path: string) => {
-  try {
-    await promises.stat(path);
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
-
-export { saveKeyValue, getKeyValue, TokenDictionary };
+export const storageService = new StorageService();
