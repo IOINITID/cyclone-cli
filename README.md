@@ -25,8 +25,6 @@ On the first run, the token and city API setup process will be started to comple
 
 - Show weather with CLI
 - One of the popular weather APIs is used - OpenWeatherMap
-  <!-- - Detailed or minimal mode for weather display -->
-  <!-- - Application language selection, English and Russian are available -->
 - Interactive CLI with the ability to select actions, show loading states and text animations when displaying information
 - Emoji as weather icon display
 - Written in TypeScript
@@ -72,10 +70,18 @@ The application settings file is located in the user folder, in the hidden direc
 - Nanospinner
 - Yargs
 
+### Changelog:
+
+A list of all versions and their changes can be found in the <a href='https://github.com/IOINITID/cyclone-cli/blob/main/CHANGELOG.md'>CHANGELOG.md</a> file. The releases of each version are located on the <a href='https://github.com/IOINITID/cyclone-cli/releases'>releases page</a> on Github.
+
 ### Contributing:
 
-If you want to improve the project, you can submit your PR with corrections or improvements. The file <a href='https://github.com/IOINITID/cyclone-cli/blob/development/contributing.md'>contributing.md</a> describes the details of how to start and configure the project.
+If you want to improve the project, you can submit your PR with corrections or improvements. The file <a href='https://github.com/IOINITID/cyclone-cli/blob/main/CONTRIBUTING.md'>CONTRIBUTING.md</a> describes the details of how to start and configure the project.
+
+### Code of conduct:
+
+The rules for the community when sending pull requests are in the file <a href='https://github.com/IOINITID/cyclone-cli/blob/main/CODE_OF_CONDUCT.md'>CODE_OF_CONDUCT.md</a>.
 
 ### Licence:
 
-The MIT license is located in the file <a href='https://github.com/IOINITID/cyclone-cli/blob/development/licence.md'>licence.md</a>.
+The MIT license is located in the file <a href='https://github.com/IOINITID/cyclone-cli/blob/main/LICENCE.md'>LICENCE.md</a>.
