@@ -1,6 +1,15 @@
-[npm, licence, codestyle, download, install size]
+![logo](logo.svg)
 
-# [Иконка] Cyclone
+[![npm version](https://badge.fury.io/js/cyclone-cli.svg)](https://badge.fury.io/js/cyclone-cli)
+![npm](https://img.shields.io/npm/dw/cyclone-cli)
+![license](https://badgen.net/github/license/IOINITID/cyclone-cli)
+![minzip](https://img.shields.io/bundlephobia/minzip/cyclone-cli)
+
+![!last-commit](https://img.shields.io/github/last-commit/ioinitid/cyclone-cli)
+![!PRs-welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
+![!code style-prettier](https://img.shields.io/badge/code%20style-prettier-ff69b4)
+
+# ![logo](logo.svg) Cyclone
 
 ## CLI for getting weather forecast.
 
@@ -16,8 +25,8 @@ On the first run, the token and city API setup process will be started to comple
 
 - Show weather with CLI
 - One of the popular weather APIs is used - OpenWeatherMap
-- Detailed or minimal mode for weather display
-- Application language selection, English and Russian are available
+  <!-- - Detailed or minimal mode for weather display -->
+  <!-- - Application language selection, English and Russian are available -->
 - Interactive CLI with the ability to select actions, show loading states and text animations when displaying information
 - Emoji as weather icon display
 - Written in TypeScript
@@ -56,14 +65,17 @@ The application settings file is located in the user folder, in the hidden direc
 
 ### Dependencies:
 
-- Chalk
-- Inquirer
 - Axios
+- Chalk
+- Dedent
+- Inquirer
+- Nanospinner
+- Yargs
 
 ### Contributing:
 
-If you want to improve the project, you can submit your PR with corrections or improvements. The file <a href='#'>contribute.md</a> describes the details of how to start and configure the project.
+If you want to improve the project, you can submit your PR with corrections or improvements. The file <a href='https://github.com/IOINITID/cyclone-cli/blob/development/contributing.md'>contributing.md</a> describes the details of how to start and configure the project.
 
 ### Licence:
 
-The MIT license is located in the file <a href='#'>licence.md</a>.
+The MIT license is located in the file <a href='https://github.com/IOINITID/cyclone-cli/blob/development/licence.md'>licence.md</a>.
