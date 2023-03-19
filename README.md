@@ -63,12 +63,12 @@ The application settings file is located in the user folder, in the hidden direc
 
 ### Dependencies:
 
-- Axios
-- Chalk
-- Dedent
-- Inquirer
-- Nanospinner
-- Yargs
+- <a href='https://www.npmjs.com/package/axios'>Axios</a>
+- <a href='https://www.npmjs.com/package/chalk'>Chalk</a>
+- <a href='https://www.npmjs.com/package/dedent'>Dedent</a>
+- <a href='https://www.npmjs.com/package/inquirer'>Inquirer</a>
+- <a href='https://www.npmjs.com/package/nanospinner'>Nanospinner</a>
+- <a href='https://www.npmjs.com/package/yargs'>Yargs</a>
 
 ### Changelog:
 
@@ -82,6 +82,6 @@ If you want to improve the project, you can submit your PR with corrections or i
 
 The rules for the community when sending pull requests are in the file <a href='https://github.com/IOINITID/cyclone-cli/blob/main/CODE_OF_CONDUCT.md'>CODE_OF_CONDUCT.md</a>.
 
-### Licence:
+### License:
 
-The MIT license is located in the file <a href='https://github.com/IOINITID/cyclone-cli/blob/main/LICENCE.md'>LICENCE.md</a>.
+The MIT license is located in the file <a href='https://github.com/IOINITID/cyclone-cli/blob/main/LICENSE.md'>LICENSE.md</a>.
