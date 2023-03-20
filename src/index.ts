@@ -2,13 +2,13 @@
 import { printService } from './services/print.service';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
-import { cycloneController } from './controllers/cyclone.controller';
+import { appController } from './controllers/app.controller';
 
 const main = async () => {
   const args = await yargs(hideBin(process.argv)).help(false).version(false).argv;
 
   if (process.env.MODE === 'development') {
-    printService.log('Переданные аргументы: ', args);
+    printService.log('Args: ', args);
   }
 
   if (args.h || args.help) {
@@ -17,25 +17,25 @@ const main = async () => {
 
   if (args.c || args.city) {
     if (args.c) {
-      return cycloneController.saveCity(String(args.c));
+      return appController.saveCity(String(args.c));
     }
 
-    return cycloneController.saveCity(String(args.city));
+    return appController.saveCity(String(args.city));
   }
 
   if (args.t || args.token) {
     if (args.t) {
-      return cycloneController.saveToken(String(args.t));
+      return appController.saveToken(String(args.t));
     }
 
-    return cycloneController.saveToken(String(args.token));
+    return appController.saveToken(String(args.token));
   }
 
   if (args.v || args.version) {
     return printService.version();
   }
 
-  return cycloneController.getWeatherForecast();
+  return appController.getWeatherForecast();
 };
 
 main();
