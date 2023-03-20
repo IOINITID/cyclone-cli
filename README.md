@@ -9,8 +9,6 @@
 ![!PRs-welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
 ![!code style-prettier](https://img.shields.io/badge/code%20style-prettier-ff69b4)
 
-# ![logo](logo.svg) Cyclone
-
 ## CLI for getting weather forecast.
 
 ### 📄 About:
