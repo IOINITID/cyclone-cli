@@ -1,6 +1,8 @@
 import chalk from 'chalk';
 import dedent from 'dedent';
 import { appController } from 'src/controllers/app.controller';
+import gradient from 'gradient-string';
+import figlet from 'figlet';
 
 class PrintService {
   public help(): void {
@@ -17,7 +19,17 @@ class PrintService {
   }
 
   public async version(): Promise<void> {
-    console.log(chalk.bgWhite(' Version ') + ' ' + (await appController.getAppVersion()));
+    const versionGradient = gradient(['#B2DAFF', '#A988F1']);
+    const version = await appController.getAppVersion();
+
+    figlet.text(`Cyclone ${version}`, { font: 'Slant' }, (error, result) => {
+      if (error) {
+        console.log(`Cyclone ${version}`);
+        return;
+      }
+
+      console.log(versionGradient.multiline(result));
+    });
   }
 
   public weather(weather: Record<string, any>): void {
