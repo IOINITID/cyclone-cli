@@ -1,6 +1,6 @@
 {
   "name": "cyclone-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cyclone - CLI for getting weather forecast.",
   "main": "./dist/index.js",
   "type": "module",
