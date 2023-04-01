@@ -61,7 +61,6 @@ class AppController {
       let token = (await storageService.get(Storage.Token)) || '';
       let city = (await storageService.get(Storage.City)) || '';
 
-      // TODO: Вынести проверуки в отдельный метод
       if (!token) {
         const prompt = inquirer.createPromptModule();
 
@@ -82,7 +81,6 @@ class AppController {
         }
       }
 
-      // TODO: Вынести проверуки в отдельный метод
       if (!city) {
         const prompt = inquirer.createPromptModule();
 
