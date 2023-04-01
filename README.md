@@ -69,6 +69,7 @@ The application settings file is located in the user folder, in the hidden direc
 - <a href='https://www.npmjs.com/package/yargs'>Yargs</a>
 - <a href='https://www.npmjs.com/package/gradient-string'>Gradient-String</a>
 - <a href='https://www.npmjs.com/package/figlet'>Figlet</a>
+- <a href='https://www.npmjs.com/package/dayjs'>DayJS</a>
 
 ### 📄 Changelog:
 
